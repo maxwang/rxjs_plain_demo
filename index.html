@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Test Plain RxJS</title>
+    <style>
+        #form {
+          margin-bottom: 20px;
+        }
+        .location {
+          float: left;
+          padding: 10px;
+          margin-right: 20px;
+          margin-bottom: 20px;
+          border: 1px solid #ddd;
+          border-radius: 5px;
+        }
+        .location p {
+          margin-top: 10px;
+          margin-bottom: 10px;
+          text-align: center;
+        }
+        .zip { font-size: 2em; }
+        .temp { font-size: 4em; }
+    </style>
+</head>
+<body>
+    <div id="app-container">
+        <div id="form">
+            <label>Zip Code:</label>
+            <input type="text" id="zipcode-input" />
+            <button id="add-location">
+                Add Location
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/6.2.2/rxjs.umd.min.js"></script>
+    <script>
+        console.log('RxJS included?', !!rxjs);
+        const appContainer = document.getElementById('app-container');
+        const zipcodeInput = document.getElementById('zipcode-input');
+        const addLocationBtn = document.getElementById('add-location');
+        const { from } = rxjs; 
+        const { filter, map } = rxjs.operators;
+        let beers = [
+            {name: "Stella", country: "Belgium", price: 9.50},
+            {name: "Sam Adams", country: "USA", price: 8.50},
+            {name: "Bud Light", country: "USA", price: 6.50},
+            {name: "Brooklyn Lager", country: "USA", price: 8.00},
+            {name: "Sapporo", country: "Japan", price: 7.50}
+        ];
+
+        from(beers).pipe(
+            filter(beer => beer.price < 8), 
+            map(beer =>  {
+                beer.name + ": $" + beer.price;
+                console.log(beer);}) 
+        )
+        .subscribe()
+
+
+
+    </script>
+</body>
+</html>
